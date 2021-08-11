@@ -6,6 +6,7 @@
 #Note: No data augmentation is done here.
 
 import numpy as np
+import argparse
 from PIL import Image
 from lxml import etree
 import os
@@ -16,11 +17,15 @@ from skimage import exposure
 import matplotlib.pyplot as plt
 #%matplotlib inline
 
+parser=argparse.ArgumentParser(description="Rescale images to WIDER face template and specific size")
+parser.add_argument("--size", type=int, default=4000)
 
 
-DATA_DIR = "/home/sumanyu/scratch/MIA_XAI/DDSM_processed/DDSM_with_XML_Fin/"
-NEW_DATA_DIR = "/home/sumanyu/scratch/MIA_XAI/DDSM_Wider_Face/images/"
-OUTPUT_FILE = '/home/sumanyu/scratch/MIA_XAI/DDSM_Wider_Face/ddsm_bbox.txt'
+args=parser.parse_args()
+
+DATA_DIR = "/home/cse/phd/anz198277/scratch/datasets/DDSM_processed/DDSM_with_XML_Fin/"
+NEW_DATA_DIR = "/home/cse/phd/anz198277/scratch/XAI_processed/DDSM_4k/images/"
+OUTPUT_FILE = '/home/cse/phd/anz198277/scratch/XAI_processed/DDSM_4k/ddsm_bbox.txt'
 
 files = os.listdir(DATA_DIR)
 img_files = []
@@ -54,8 +59,8 @@ def coord_w_h(xml_path, img_size):
         size = root.find('size')
         width = int( size.find('width').text )
         height = int( size.find('height').text )
-        x_scale = (1000*1.0)/width
-        y_scale = (1000*1.0)/height
+        x_scale = (w*1.0)/width
+        y_scale = (h*1.0)/height
         
         x1 = int( bbx.find('xmin').text )
         y1 = int( bbx.find('ymin').text )
@@ -105,11 +110,11 @@ with open(OUTPUT_FILE, "w") as writer:
         # This will load the image as (height, width)
         img = cv2.imread(img_old,0)
         #print("img.shape",img.shape)
-        if (img.shape == (4000,4000)):
+        if (img.shape == (args.size, args.size)):
             resize_img = img
 
         else:
-            resize_img = cv2.resize(img, (4000,4000), interpolation = cv2.INTER_AREA)
+            resize_img = cv2.resize(img, (args.size, args.size), interpolation = cv2.INTER_AREA)
 
         cv2.imwrite(img_new, resize_img)
         
@@ -130,7 +135,7 @@ with open(OUTPUT_FILE, "w") as writer:
             
         # write to the output txt file
         file_name = os.path.basename(img_new)
-        file_name = os.path.join('ddsm_images', file_name)
+        file_name = os.path.join('images', file_name)
         
         n = 0
         bboxes = []

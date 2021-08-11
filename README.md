@@ -1,8 +1,8 @@
-# tiny-faces-pytorch
+# Tiny Faces for Small Lesion Detection
 
-This is a PyTorch implementation of Peiyun Hu's [awesome tiny face detector](https://github.com/peiyunh/tiny). 
+This repo includes Peiyun Hu's [awesome tiny face detector](https://github.com/peiyunh/tiny) for the use case of small lesion detecion in mammographic scans.
 
-We use (and recommend) **Python 3.6+** for minimal pain when using this codebase (plus Python 3.6 has really cool features).
+<!-- We use (and recommend) **Python 3.6+** for minimal pain when using this codebase (plus Python 3.6 has really cool features).
 
 **NOTE** Be sure to cite Peiyun's CVPR paper and this repo if you use this code!
 
@@ -13,28 +13,28 @@ This code gives the following mAP results on the WIDER Face dataset:
 | easy    | 0.902 |
 | medium  | 0.892 |
 | hard    | 0.797 |
-
+ -->
 ## Getting Started
 
 - Clone this repository.
-- Download the WIDER Face dataset and annotations files to `data/WIDER`.
-- Install dependencies with `pip install -r requirements.txt`.
+- Download the DDSM and AIIMS dataset and annotations files to `data/` folder. 
+- Install dependencies with `conda env create -f env.yml`.
+- Run `Preprocess_Data_Tiny_Faces.py` to preprocess XMLs and images for WiderFace format.
 
-Your data directory should look like this for WIDERFace
+<!-- Your data directory should look like this for WIDERFace
 
 ```
 - data
-    - WIDER
-        - README.md
-        - wider_face_split
+    - DDSM
+        - images
         - WIDER_train
         - WIDER_val
         - WIDER_test
-```
+``` -->
 
-## Pretrained Weights
+<!-- ## Pretrained Weights -->
 
-You can find the pretrained weights which get the above mAP results [here](https://drive.google.com/open?id=1V8c8xkMrQaCnd3MVChvJ2Ge-DUfXPHNu).
+<!-- You can find the pretrained weights which get the above mAP results [here](https://drive.google.com/open?id=1V8c8xkMrQaCnd3MVChvJ2Ge-DUfXPHNu). -->
 
 ## Training
 
@@ -49,3 +49,6 @@ To run evaluation and generate the output files as per the WIDERFace specificati
 You can then use the dataset's `eval_tools` to generate the mAP numbers (this needs Matlab/Octave).
 
 Similarly, to run the model on the test set, run `make test` to generate results in the `test_results` directory.
+
+## FROC Curve
+Lesion classification and localization in medical imaging is usually done using FROC curve. To generate the FROC, use the `FROC_Sumanyu_updated.py` script.
