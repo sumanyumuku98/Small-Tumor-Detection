@@ -1,6 +1,6 @@
 # Tiny Faces for Small Lesion Detection
 
-This repo includes Peiyun Hu's [awesome tiny face detector](https://github.com/peiyunh/tiny) for the use case of small lesion detecion in mammographic scans.
+This repo includes Peiyun Hu's [awesome tiny face detector](https://github.com/peiyunh/tiny) for the use case of small lesion detection in mammographic scans.
 
 <!-- We use (and recommend) **Python 3.6+** for minimal pain when using this codebase (plus Python 3.6 has really cool features).
 
