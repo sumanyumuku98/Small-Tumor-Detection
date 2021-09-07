@@ -27,7 +27,7 @@ def arguments():
     parser.add_argument("--batch_size", default=1, type=int)
     parser.add_argument("--workers", default=1, type=int)
     parser.add_argument("--start-epoch", default=0, type=int)
-    parser.add_argument("--epochs", default=350, type=int)
+    parser.add_argument("--epochs", default=3, type=int)
     parser.add_argument("--save-every", default=25, type=int)
     parser.add_argument("--resume", default="")
     parser.add_argument("--debug", action="store_true")

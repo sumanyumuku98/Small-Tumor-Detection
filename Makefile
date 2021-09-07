@@ -1,11 +1,11 @@
 .RECIPEPREFIX +=
 
 PYTHON=python
-ROOT=data/DDSM_Wider_Face
-TRAINDATA=$(ROOT)/ddsm_bbox.txt
+ROOT=data/AIIMS_2k/train
+TRAINDATA=$(ROOT)/aiims_bbox.txt
 VALDATA=$(ROOT)/wider_face_split/wider_face_val_bbx_gt.txt
 TESTDATA=$(ROOT)/wider_face_split/wider_face_test_filelist.txt
-DEVICE=3
+DEVICE=1
 
 CHECKPOINT=weights/checkpoint_50.pt
 

@@ -18,14 +18,14 @@ import matplotlib.pyplot as plt
 
 
 
-DATA_DIR = "/home/sumanyu/scratch/MIA_XAI/DDSM_processed/DDSM_with_XML_Fin/"
-NEW_DATA_DIR = "/home/sumanyu/scratch/MIA_XAI/DDSM_Wider_Face/images/"
-OUTPUT_FILE = '/home/sumanyu/scratch/MIA_XAI/DDSM_Wider_Face/ddsm_bbox.txt'
+DATA_DIR = "/home/sumanyu/scratch/MIA_XAI/AIIMS_DDSM_Style/test/"
+NEW_DATA_DIR = "/home/sumanyu/scratch/MIA_XAI/AIIMS_Wider_Face/test/images/"
+OUTPUT_FILE = '/home/sumanyu/scratch/MIA_XAI/AIIMS_Wider_Face/test/aiims_bbox.txt'
 
 files = os.listdir(DATA_DIR)
 img_files = []
 for file in files:
-    if '.jpg' in file:
+    if '.png' in file:
         img_files.append(file)
         
 
@@ -52,15 +52,15 @@ def coord_w_h(xml_path, img_size):
         bbx = obj.find('bndbox')
         name = obj.find('name').text 
         size = root.find('size')
-        width = int( size.find('width').text )
-        height = int( size.find('height').text )
+        width = int( float(size.find('width').text ))
+        height = int( float(size.find('height').text ))
         x_scale = (1000*1.0)/width
         y_scale = (1000*1.0)/height
         
-        x1 = int( bbx.find('xmin').text )
-        y1 = int( bbx.find('ymin').text )
-        x2 = int( bbx.find('xmax').text )
-        y2 = int( bbx.find('ymax').text )
+        x1 = int( float(bbx.find('xmin').text ))
+        y1 = int(float( bbx.find('ymin').text ))
+        x2 = int( float(bbx.find('xmax').text ))
+        y2 = int( float(bbx.find('ymax').text ))
         (origLeft, origTop, origRight, origBottom) = (x1, y1, x2, y2)
         
         x1 = int(np.round(origLeft * x_scale))
@@ -95,9 +95,11 @@ no_mass_cnt = 0
 
 with open(OUTPUT_FILE, "w") as writer:
     for file in img_files:
-        #print(file)
-        xml_old = xml_path + os.path.splitext(file)[0] + '.xml'    
+        # print(file)
+        xml_old = xml_path + os.path.splitext(file)[0] + '.xml'
+        # print(xml_old)    
         xml_new = save_path_xml + os.path.splitext(file)[0] + '.xml'
+        # print(xml_new)
         img_old = img_path + file
         img_new = save_path_img + file   
 
@@ -125,12 +127,13 @@ with open(OUTPUT_FILE, "w") as writer:
                     temp_coord.append(coord[i])
         except:
             #print("No xml file")
+            # print(e)
             no_xml_cnt +=1
             temp_coord = []
             
         # write to the output txt file
         file_name = os.path.basename(img_new)
-        file_name = os.path.join('ddsm_images', file_name)
+        file_name = os.path.join('images', file_name)
         
         n = 0
         bboxes = []

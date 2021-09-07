@@ -17,7 +17,7 @@ class WIDERFace(dataset.Dataset):
     to take care of the indexing discrepancies."""
 
     def __init__(self, path, templates, img_transforms=None, dataset_root="", split="train",
-                 train=True, input_size=(500, 500), heatmap_size=(250, 250),
+                 train=True, input_size=(2000, 2000), heatmap_size=(250, 250),
                  pos_thresh=0.7, neg_thresh=0.3, pos_fraction=0.5, debug=False):
         super().__init__()
 
@@ -142,9 +142,11 @@ class WIDERFace(dataset.Dataset):
         img = np.array(image)
 
         # Get a random crop of the image and keep only relevant bboxes
-        # img, bboxes, paste_box = self.processor.crop_image(img, bboxes)
+        img, bboxes, paste_box = self.processor.crop_image(img, bboxes)
         # print(img.shape)
-        img, bboxes, paste_box= img, bboxes, [0,0,img.shape[1],img.shape[0]]
+
+        # img, bboxes, paste_box= img, bboxes, [0,0,img.shape[1],img.shape[0]]
+        
         # print(paste_box)
         pad_mask = self.processor.get_padding(paste_box)
 
